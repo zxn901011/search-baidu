@@ -1,6 +1,6 @@
 
 import { NativeModules } from 'react-native';
 
-const { RNSearchBaidu } = NativeModules;
+const { RNSearch } = NativeModules;
 
-export default RNSearchBaidu;
+export default RNSearch;
