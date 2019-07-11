@@ -1,6 +1,7 @@
-
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.hisense.zxn">
+    package="com.hisense.zxn">
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>
   
