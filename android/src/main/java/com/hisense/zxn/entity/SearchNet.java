@@ -1,4 +1,4 @@
-package com.hisense.hibeans.search.searchnet;
+package com.hisense.zxn.entity;
 
 /**
  * Created by liudunjian on 2017/11/30.

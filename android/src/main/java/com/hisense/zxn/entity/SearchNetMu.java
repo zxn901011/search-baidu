@@ -1,4 +1,4 @@
-package com.hisense.hibeans.search.searchnet;
+package com.hisense.zxn.entity;
 
 import com.google.gson.annotations.SerializedName;
 
