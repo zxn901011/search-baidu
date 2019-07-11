@@ -9,6 +9,7 @@ import com.facebook.react.bridge.WritableMap;
 import com.google.gson.Gson;
 import com.hisense.zxn.entity.SearchNet;
 import com.hisense.zxn.RNSearchManager;
+import java.util.List;
 
 public class RNSearchModule extends ReactContextBaseJavaModule {
 
