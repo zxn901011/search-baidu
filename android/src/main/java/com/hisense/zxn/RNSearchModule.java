@@ -1,7 +1,7 @@
 package com.hisense.zxn;
 
 import com.facebook.react.bridge.Arguments;
-import com.facebook.react.bridge.Promise;
+import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
@@ -25,17 +25,17 @@ public class RNSearchModule extends ReactContextBaseJavaModule {
     return "RNSearch";
   }
 
-  @ReactMethod
-  public void decode(String word, Promise promise) {
-      List<SearchNet> netList = RNSearchManager.getInstance().decode(word);
-      WritableMap map = Arguments.createMap();
-      if (netList == null || netList.size() == 0) {
-          map.putString("status", "0");
-          map.putString("result", "no result");
-      } else {
-          map.putString("status", "0");
-          map.putString("result", new Gson().toJson(netList));
-      }
-      promise.resolve(map);
-  }
+    @ReactMethod
+    public void decode(String word,Callback successCallback) {
+        List<SearchNet> netList = RNSearchManager.getInstance().decode(word);
+        WritableMap map = Arguments.createMap();
+        if (netList == null || netList.size() == 0) {
+            map.putString("status", "0");
+            map.putString("result", "no result");
+        } else {
+            map.putString("status", "0");
+            map.putString("result", new Gson().toJson(netList));
+        }
+        successCallback.invoke(map);
+    }
 }
