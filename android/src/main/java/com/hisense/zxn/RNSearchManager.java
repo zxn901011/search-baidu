@@ -36,14 +36,10 @@ public class RNSearchManager {
             return null;
         List<SearchNet> searchNets = new ArrayList<>();
         String url = BASE_URL.concat(searchText);
-
         try {
             Document doc = Jsoup.connect(url).get();
-            Elements recommends = doc.select(".result").select(".c-result").select(".c-clk-recommend");
+            Elements recommends = doc.select(".results").select(".c-result.result");
             packageResult(searchNets, recommends);
-            Elements results = doc.select(".result").select(".c-result");
-            packageResult(searchNets, results);
-
         } catch (UncheckedIOException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -56,15 +52,22 @@ public class RNSearchManager {
         for (Element element : elements) {
             Gson gson = new Gson();
             SearchNetMu mu = gson.fromJson(element.attr("data-log"), SearchNetMu.class);
-            String title = element.select("div.c-container").select(".c-title").select(".c-gap-top-small").text();
-            String description = element.select("div.c-container").select(".c-row").select(".c-abstract").select(".c-gap-top-small").text();
+            String title = element.select("div.c-result-content").
+                    select(".c-gap-bottom-small").
+                    select(".c-touchable-feedback.c-touchable-feedback-no-default").
+                    select("[href]").
+                    attr("voice-tag");
+            String description = element.select("div.c-result-content").
+                   select(".c-abstract.c-row").
+                   select(".c-color").
+                   select(".c-line-clamp3").
+                   text();
             SearchNet searchNet = new SearchNet(title, mu, description);
-            if (!TextUtils.isEmpty(title) && !TextUtils.isEmpty(description) && mu == null) {
-
+            if (!TextUtils.isEmpty(title) && !TextUtils.isEmpty(description) && mu != null) {
                 for (SearchNet search : searchNets) {
-                    if (search.getTitle().equals(title))
-                        return;
-                }
+                     if (search.getTitle().equals(title))
+                         return;
+                     }
                 searchNets.add(searchNet);
             }
         }

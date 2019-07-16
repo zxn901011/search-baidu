@@ -5,7 +5,6 @@ package com.hisense.zxn.entity;
  */
 
 public class SearchNet {
-
     private String title;
     private SearchNetMu searchNetMu;
     private String detail;
