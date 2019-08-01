@@ -57,6 +57,8 @@ public class RNSearchManager {
                     select(".c-touchable-feedback.c-touchable-feedback-no-default").
                     select("[href]").
                     attr("voice-tag");
+            title=title.replaceAll("<em>","");
+            title=title.replaceAll("</em>","");
             String description = element.select("div.c-result-content").
                    select(".c-abstract.c-row").
                    select(".c-color").

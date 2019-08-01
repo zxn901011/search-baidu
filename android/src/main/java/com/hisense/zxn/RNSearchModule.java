@@ -9,24 +9,24 @@ import com.facebook.react.bridge.WritableMap;
 import com.google.gson.Gson;
 import com.hisense.zxn.entity.SearchNet;
 import com.hisense.zxn.RNSearchManager;
+
 import java.util.List;
 
 public class RNSearchModule extends ReactContextBaseJavaModule {
 
-  private final ReactApplicationContext reactContext;
+    private final ReactApplicationContext reactContext;
 
-  public RNSearchModule(ReactApplicationContext reactContext) {
-    super(reactContext);
-    this.reactContext = reactContext;
-  }
+    public RNSearchModule(ReactApplicationContext reactContext) {
+        super(reactContext);
+        this.reactContext = reactContext;
+    }
 
-  @Override
-  public String getName() {
-    return "RNSearch";
-  }
-
+    @Override
+    public String getName() {
+        return "RNSearch";
+    }
     @ReactMethod
-    public void decode(String word,Callback successCallback) {
+    public void decode(String word, Callback successCallback) {
         List<SearchNet> netList = RNSearchManager.getInstance().decode(word);
         WritableMap map = Arguments.createMap();
         if (netList == null || netList.size() == 0) {
@@ -37,5 +37,14 @@ public class RNSearchModule extends ReactContextBaseJavaModule {
             map.putString("result", new Gson().toJson(netList));
         }
         successCallback.invoke(map);
+    }
+
+    @ReactMethod
+    public boolean isNetWork() {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            return NetWorkUtil.isNetSystemUsable(reactContext);
+        } else {
+            return NetWorkUtil.isNetPingUsable();
+        }
     }
 }
