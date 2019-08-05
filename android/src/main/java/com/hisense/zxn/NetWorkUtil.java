@@ -5,6 +5,19 @@ import android.net.ConnectivityManager;
 import android.net.NetworkCapabilities;
 
 public class NetWorkUtil {
+
+    private static NetWorkUtil instance;
+
+    public static NetWorkUtil getInstance() {
+        if (instance == null) {
+            synchronized (NetWorkUtil.class) {
+                if (instance == null)
+                    instance = new NetWorkUtil();
+            }
+        }
+        return instance;
+    }
+
     /**
      * 判断当前网络是否可用(通用方法)
      * 耗时12秒
@@ -34,7 +47,7 @@ public class NetWorkUtil {
      * @param context
      * @return
      */
-    public static boolean isNetSystemUsable(Context context) {
+    public boolean isNetSystemUsable(Context context) {
         boolean isNetUsable = false;
         ConnectivityManager manager = (ConnectivityManager)
                 context.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -42,6 +55,8 @@ public class NetWorkUtil {
             NetworkCapabilities networkCapabilities =
                     manager.getNetworkCapabilities(manager.getActiveNetwork());
             isNetUsable = networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED);
+        } else {
+            isNetUsable = isNetPingUsable();
         }
         return isNetUsable;
     }

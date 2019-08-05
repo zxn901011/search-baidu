@@ -25,6 +25,7 @@ public class RNSearchModule extends ReactContextBaseJavaModule {
     public String getName() {
         return "RNSearch";
     }
+
     @ReactMethod
     public void decode(String word, Callback successCallback) {
         List<SearchNet> netList = RNSearchManager.getInstance().decode(word);
@@ -40,11 +41,11 @@ public class RNSearchModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public boolean isNetWork() {
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-            return NetWorkUtil.isNetSystemUsable(reactContext);
-        } else {
-            return NetWorkUtil.isNetPingUsable();
-        }
+    public void isNetWork(Callback successCallback) {
+        boolean isNetWork = NetWorkUtil.getInstance().isNetSystemUsable(reactContext);
+        WritableMap map = Arguments.createMap();
+        map.putString("status", "0");
+        map.putBoolean("result", isNetWork);
+        successCallback.invoke(map);
     }
 }
