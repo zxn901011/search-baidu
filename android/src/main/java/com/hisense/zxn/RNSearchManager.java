@@ -18,7 +18,7 @@ import java.util.List;
 
 public class RNSearchManager {
 
-    private static final String BASE_URL = "https://m.baidu.com/s?&ie=urf-8&wd=";
+    private static final String BASE_URL = "http://m.baidu.com/s?&ie=urf-8&wd=";
     private static RNSearchManager instance;
 
     public static RNSearchManager getInstance() {
